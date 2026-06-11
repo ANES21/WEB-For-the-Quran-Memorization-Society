@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم الإدارية والمالية - جمعية المعالي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <nav class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <img src="img/lego.jpeg" alt="شعار الجمعية" class="h-10 w-10 rounded-full border-2 border-white object-cover">
+                <span class="text-lg md:text-xl font-bold">بوابة الإدارة وأمانة الصندوق | مكتب ملاكو</span>
+            </div>
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <span id="welcomeName" class="text-sm font-semibold bg-blue-700 px-3 py-1.5 rounded-lg">جاري التحقق...</span>
+                <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-3 py-1.5 rounded-lg text-sm font-bold transition">خروج</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-400 font-bold">إجمالي المستخدمين</p>
+                    <p id="totalUsers" class="text-3xl font-bold text-blue-600 mt-1">--</p>
+                </div>
+                <div class="text-3xl bg-blue-50 p-3 rounded-xl">👥</div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-400 font-bold">عدد الحلقات النشطة</p>
+                    <p id="totalGroups" class="text-3xl font-bold text-purple-600 mt-1">--</p>
+                </div>
+                <div class="text-3xl bg-purple-50 p-3 rounded-xl">🏫</div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-gray-400 font-bold">سجلات السداد والترقيات</p>
+                    <p id="totalRecords" class="text-3xl font-bold text-emerald-600 mt-1">--</p>
+                </div>
+                <div class="text-3xl bg-emerald-50 p-3 rounded-xl">📊</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="lg:col-span-1 space-y-6">
+                
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-base font-bold text-gray-800 mb-4 pb-2 border-b">🆕 إنشاء حلقة / فوج جديد</h3>
+                    <form id="createGroupForm" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1">اسم الحلقة</label>
+                            <input type="text" id="gName" required placeholder="مثال: حلقة الإمام نافع" class="w-full px-3 py-2 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1">اسم الشيخ / المعلم</label>
+                            <input type="text" id="gTeacher" required placeholder="مثال: الشيخ عبد الرحمن" class="w-full px-3 py-2 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1">التوقيت / الأيام</label>
+                            <input type="text" id="gSchedule" required placeholder="مثال: السبت والاثنين 16:00" class="w-full px-3 py-2 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-sm transition">حفظ الفوج بالمنظومة</button>
+                    </form>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-base font-bold text-gray-800 mb-4 pb-2 border-b">💰 قيد اشتراك مالي جديد</h3>
+                    <form id="paymentForm" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1">معرف الطالب (ID)</label>
+                            <input type="text" id="payStudentId" readonly required placeholder="اختر من جدول المستخدمين 👈" class="w-full px-3 py-2 border bg-amber-50 rounded-xl text-sm outline-none cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1">المبلغ (دج)</label>
+                            <input type="number" id="payAmount" required placeholder="0.00" class="w-full px-3 py-2 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1">نوع المستحقات / الشهر</label>
+                            <input type="text" id="payType" required placeholder="مثال: اشتراك شهر جوان 2026" class="w-full px-3 py-2 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition">ترحيل الوصل المالي</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-8">
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-5 bg-gray-50 border-b">
+                        <h3 class="text-base font-bold text-gray-800">🏫 سجل الحلقات والأفواج المقيدة</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-sm">
+                            <thead class="bg-gray-100 text-gray-500 text-xs font-bold">
+                                <tr>
+                                    <th class="p-4">اسم الحلقة</th>
+                                    <th class="p-4">المحفظ المعتمد</th>
+                                    <th class="p-4">جدول التوقيت</th>
+                                </tr>
+                            </thead>
+                            <tbody id="groupsTableBody" class="divide-y divide-gray-50">
+                                <tr><td colspan="3" class="p-4 text-center text-gray-400 text-xs">جاري جلب بيانات الحلقات بأمان...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-5 bg-gray-50 border-b flex justify-between items-center">
+                        <h3 class="text-base font-bold text-gray-800">👥 إدارة حسابات المستخدمين والطلاب</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-sm">
+                            <thead class="bg-gray-100 text-gray-500 text-xs font-bold">
+                                <tr>
+                                    <th class="p-4">الاسم الكامل</th>
+                                    <th class="p-4">الدور</th>
+                                    <th class="p-4">البريد الإلكتروني</th>
+                                    <th class="p-4 text-center">إجراء مالي</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody" class="divide-y divide-gray-50">
+                                <tr><td colspan="4" class="p-4 text-center text-gray-400 text-xs">جاري تحميل قائمة البروفايلات...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 text-center py-4 text-xs text-gray-500 mt-12">
+        <p>جميع الحقوق محفوظة © جمعية المعالي للعلوم والتربية - مكتب ملاكو 2026</p>
+    </footer>
+
+    <script>
+        const token = localStorage.getItem('supabase_token');
+        const profile = JSON.parse(localStorage.getItem('user_profile') || '{}');
+        const role = (profile.role || '').toLowerCase();
+
+        // جدار الحماية للوحة الإدارية والمالية
+        if (!token || (role !== 'admin' && role !== 'cashier')) {
+            alert('🔒 غير مصرح لك بدخول بوابة الإدارة المندمجة!');
+            window.location.href = 'login.html';
+        }
+
+        document.getElementById('welcomeName').innerText = `${profile.name || 'المسؤول التنفيذي'}`;
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGroups();
+            loadUsers();
+        });
+
+        // 1. استدعاء الحلقات بنجاح وحل خطأ الـ Fetch
+        async function loadGroups() {
+            try {
+                const res = await fetch('http://localhost:8080/api/admin/groups', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) throw new Error();
+                const groups = await res.json();
+                
+                document.getElementById('totalGroups').innerText = groups.length;
+                const tbody = document.getElementById('groupsTableBody');
+                
+                if(!groups.length) {
+                    tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-gray-400 text-xs">لا توجد حلقات مسجلة حالياً.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = groups.map(g => `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-4 font-semibold text-gray-800">${g.group_name}</td>
+                        <td class="p-4 text-gray-600">${g.teacher_name || 'غير معين'}</td>
+                        <td class="p-4 text-xs text-gray-500">${g.schedule || '--'}</td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                document.getElementById('groupsTableBody').innerHTML = 
+                    `<tr><td colspan="3" class="p-4 text-center text-red-500 text-xs font-semibold">⚠️ فشل جلب بيانات الحلقات من الخادم. تأكد من تشغيل السيرفر وقاعدة البيانات.</td></tr>`;
+            }
+        }
+
+        // 2. جلب وتحديث جدول المستخدمين
+        async function loadUsers() {
+            try {
+                const res = await fetch('http://localhost:8080/api/admin/users', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) throw new Error();
+                const users = await res.json();
+                
+                document.getElementById('totalUsers').innerText = users.length;
+                const tbody = document.getElementById('usersTableBody');
+                
+                tbody.innerHTML = users.map(u => `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-4 font-semibold text-gray-800">${u.name || 'مستعمل جديد'}</td>
+                        <td class="p-4"><span class="px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs">${u.role}</span></td>
+                        <td class="p-4 text-xs text-gray-500">${u.email}</td>
+                        <td class="p-4 text-center">
+                            ${u.role.toLowerCase() === 'student' ? `
+                                <button onclick="selectForPayment('${u.user_id}')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-lg text-xs font-bold border border-emerald-200 transition">
+                                    💰 دفع اشتراك
+                                </button>
+                            ` : '<span class="text-gray-300 text-xs">لا ينطبق</span>'}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                document.getElementById('usersTableBody').innerHTML = 
+                    `<tr><td colspan="4" class="p-4 text-center text-red-500 text-xs font-semibold">⚠️ فشل استرداد قائمة بروفايلات الجمعية.</td></tr>`;
+            }
+        }
+
+        function selectForPayment(uid) {
+            document.getElementById('payStudentId').value = uid;
+            document.getElementById('payAmount').focus();
+        }
+
+        // 3. معالجة وإنشاء حلقة جديدة
+        document.getElementById('createGroupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch('http://localhost:8080/api/admin/groups', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        group_name: document.getElementById('gName').value,
+                        teacher_name: document.getElementById('gTeacher').value,
+                        schedule: document.getElementById('gSchedule').value
+                    })
+                });
+                if(!res.ok) throw new Error();
+                alert('✓ تم تسجيل الحلقة بنجاح وتثبيتها بسجلات النظام!');
+                document.getElementById('createGroupForm').reset();
+                loadGroups();
+            } catch {
+                alert('❌ تعذر حفظ الحلقة، يرجى مراجعة المدخلات والتوكن الإداري.');
+            }
+        });
+
+        // 4. قيد دفعة مالية بالخزينة السحابية
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch('http://localhost:8080/api/admin/payments', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        student_id: document.getElementById('payStudentId').value,
+                        amount: document.getElementById('payAmount').value,
+                        payment_type: document.getElementById('payType').value
+                    })
+                });
+                if(!res.ok) throw new Error();
+                alert('✓ تم ترحيل المبلغ المالي وقيد السند بالخزينة بنجاح المتكامل!');
+                document.getElementById('paymentForm').reset();
+            } catch {
+                alert('❌ فشل قيد السند المالي.');
+            }
+        });
+    </script>
+</body>
+</html>

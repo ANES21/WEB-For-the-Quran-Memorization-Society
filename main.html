@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسية - جمعية المعالي للعلوم والتربية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <nav class="bg-blue-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <img src="img/lego.jpeg" alt="شعار الجمعية" class="h-12 w-12 rounded-full border-2 border-white object-cover">
+                <span class="text-xl md:text-2xl font-bold">جمعية المعالي للعلوم والتربية - مكتب ملاكـــــــو</span>
+            </div>
+            <div id="navActions" class="flex items-center space-x-3 space-x-reverse">
+                <a href="login.html" class="bg-white text-blue-600 hover:bg-blue-50 font-bold px-5 py-2 rounded-xl transition text-sm shadow">تسجيل الدخول</a>
+                <a href="register.html" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-5 py-2 rounded-xl transition text-sm">إنشاء حساب</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-gradient-to-b from-blue-600 to-indigo-700 text-white py-20 px-6 text-center shadow-inner relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="container mx-auto max-w-3xl relative z-10">
+            <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">المنظومة الرقمية الشاملة لإدارة الحلقات القرآنية</h1>
+            <p class="text-base md:text-xl text-blue-100 mb-8 max-w-xl mx-auto">
+                مرحباً بكم في البوابة الإلكترونية لجمعية المعالي للعلوم والتربية - مكتب ملاكو، حيث ندمج التقنية بالتعليم التربوي لمتابعة ترقيات الحفظ والمدفوعات بكل سهولة وأمان.
+            </p>
+            <div id="heroActions" class="flex flex-wrap justify-center gap-4">
+                <a href="https://www.facebook.com/profile.php?id=61566701726718" target="_blank"
+                   class="bg-white text-blue-700 hover:bg-blue-50 text-base font-bold px-8 py-3.5 rounded-xl transition shadow-lg transform hover:-translate-y-0.5">
+                    زيارة صفحة الفيسبوك الرسمية للجمعية
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-16 max-w-5xl">
+        <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">خدمات المنصة الإلكترونية</h2>
+        <p class="text-center text-gray-500 text-sm mb-12">بوابة مخصصة ومترابطة تخدم كافة أطراف العملية التعليمية والتربوية</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-200">
+                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl text-blue-600 mb-4">👥</div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">إدارة الحسابات والحلقات</h3>
+                <p class="text-gray-500 text-xs leading-relaxed">بوابة خاصة بالإدارة تتيح للمسؤولين وأمناء الصندوق متابعة شؤون الطلاب، وتوزيعهم على الحلقات والمجموعات، والتحكم بالصلاحيات بحرية تامة.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-200">
+                <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-2xl text-emerald-600 mb-4">📈</div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">متابعة الترقيات والأوراد</h3>
+                <p class="text-gray-500 text-xs leading-relaxed">لوحة تحكم تفاعلية مخصصة للمشايخ والمعلمين لرصد مستويات حفظ الطلاب، وإرسال إشعارات فورية وتنبيهات مباشرة لحساباتهم عند الترقية.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-200">
+                <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-2xl text-amber-600 mb-4">💰</div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">الضبط المالي والخزينة</h3>
+                <p class="text-gray-500 text-xs leading-relaxed">نظام مالي مدمج ومحمي يقيد وصولات سداد الاشتراكات والمستحقات ويرحلها مباشرة إلى الخزينة السحابية بدقة وشفافية مطلقة.</p>
+            </div>
+        </div>
+
+        <div class="mt-16 border-t border-gray-200 pt-12 text-center">
+            <h3 class="text-xl font-bold text-gray-800 mb-6">هل لديك أي استفسار؟ تواصل معنا مباشرة</h3>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
+                <a href="https://www.facebook.com/profile.php?id=61566701726718" target="_blank"
+                   class="w-full sm:w-auto flex items-center justify-center space-x-2 space-x-reverse bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3.5 rounded-xl transition shadow-md transform hover:-translate-y-0.5 text-sm">
+                    <span>👍</span>
+                    <span>تواصل معنا عبر فيسبوك</span>
+                </a>
+                <a href="mailto:info@malakou.org"
+                   class="w-full sm:w-auto flex items-center justify-center space-x-2 space-x-reverse bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3.5 rounded-xl transition shadow-md transform hover:-translate-y-0.5 text-sm">
+                    <span>📧</span>
+                    <span>راسلنا عبر البريد الإلكتروني</span>
+                </a>
+            </div>
+            
+            <a href="tel:0660907797" 
+               class="inline-flex items-center space-x-2 space-x-reverse bg-gray-800 hover:bg-gray-900 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-lg transform hover:-translate-y-0.5 text-sm">
+                <span>📞</span>
+                <span>الاتصال الهاتفي المباشر: 97 77 90 0660</span>
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 text-center py-5 text-xs text-gray-500">
+        <p>جميع الحقوق محفوظة © جمعية المعالي للعلوم والتربية - مكتب ملاكو 2026</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const token = localStorage.getItem('supabase_token');
+            const profileStr = localStorage.getItem('user_profile');
+
+            if (token && profileStr) {
+                try {
+                    const profile = JSON.parse(profileStr);
+                    const role = (profile.role || '').toLowerCase();
+                    const welcomeName = profile.name || 'المستخدم';
+
+                    let targetDashboard = 'login.html';
+                    if (role === 'admin' || role === 'cashier') {
+                        targetDashboard = 'cashier_dashboard.html'; 
+                    } else if (role === 'student') {
+                        targetDashboard = 'student_dashboard.html';
+                    } else if (role === 'teacher') {
+                        targetDashboard = 'teacher_dashboard.html';
+                    }
+
+                    // تحديث أزرار النافبار العلوي
+                    document.getElementById('navActions').innerHTML = `
+                        <span class="text-sm font-semibold bg-blue-700 text-white px-3 py-2 rounded-xl">مرحباً، ${welcomeName}</span>
+                        <a href="${targetDashboard}" class="bg-white text-blue-600 hover:bg-blue-50 font-bold px-4 py-2 rounded-xl transition text-sm shadow">لوحة التحكم</a>
+                        <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-2 rounded-xl transition text-sm">خروج</button>
+                    `;
+
+                    // تحديث أزرار منطقة الـ Hero الرئيسية
+                    document.getElementById('heroActions').insertAdjacentHTML('beforeend', `
+                        <a href="${targetDashboard}" class="bg-blue-800 text-white hover:bg-blue-900 text-base font-bold px-8 py-3.5 rounded-xl transition shadow-lg transform hover:-translate-y-0.5">
+                            الانتقال المباشر إلى لوحة التحكم الخاصة بك
+                        </a>
+                    `);
+
+                } catch (e) {
+                    localStorage.clear();
+                }
+            }
+        });
+
+        function logout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>

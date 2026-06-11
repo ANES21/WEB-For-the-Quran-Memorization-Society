@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الطالب - جمعية المعالي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <nav class="bg-blue-600 text-white shadow-md relative">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <img src="img/lego.jpeg" alt="شعار الجمعية" class="h-10 w-10 rounded-full border-2 border-white object-cover">
+                <span class="text-lg md:text-xl font-bold">بوابة الطالب | مكتب ملاكو</span>
+            </div>
+            
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <div class="relative">
+                    <button id="notifBtn" class="relative p-2 text-white hover:bg-blue-700 rounded-xl transition duration-150 outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                        <span id="notifBadge" class="hidden absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full">0</span>
+                    </button>
+
+                    <div id="notifDropdown" class="hidden absolute left-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-gray-800">
+                        <div class="px-4 py-2 font-bold text-sm border-b border-gray-100 text-gray-700 flex justify-between items-center">
+                            <span>الإشعارات والتنبيهات</span>
+                            <button id="clearNotifBtn" class="text-xs text-blue-500 hover:underline font-normal">تحديد كمقروء</button>
+                        </div>
+                        <div id="notifList" class="max-h-60 overflow-y-auto text-xs divide-y divide-gray-50">
+                            <div class="p-4 text-center text-gray-400">لا توجد إشعارات جديدة حالياً.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <span id="welcomeName" class="text-sm font-semibold bg-blue-700 px-3 py-1.5 rounded-lg">جاري التحقق...</span>
+                <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-3 py-1.5 rounded-lg text-sm font-bold transition duration-150">خروج</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-6 text-white shadow-xl mb-8">
+            <h1 class="text-2xl md:text-3xl font-bold">مرحباً بك مجدداً في حلقة الحفظ!</h1>
+            <p class="text-sm text-blue-100 mt-2">تابع مستواك القرآني، وجدول ترقياتك وتفاعل حياً مع خادم الجمعية.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">المستوى الحالي</span>
+                    <h3 id="currentLevel" class="text-2xl font-bold text-blue-600 mt-1">المبتدئ</h3>
+                </div>
+                <div class="mt-4 text-xs text-gray-500">يتم تحديثه فور ترقيتك من قبل المعلم</div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">حالة الحساب</span>
+                    <div class="mt-2">
+                        <span id="accountStatus" class="px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-green-600 border border-green-100">نشط مفعّل</span>
+                    </div>
+                </div>
+                <div class="mt-4 text-xs text-gray-500">حسابك محمي بجدار حماية مشفر</div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">العمر المقيد</span>
+                    <h3 id="userAge" class="text-2xl font-bold text-gray-700 mt-1">-- سنة</h3>
+                </div>
+                <div class="mt-4 text-xs text-gray-500">العمر المسجل في قاعدة البيانات</div>
+            </div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
+    <div class="flex items-center space-x-3 space-x-reverse mb-4 border-b border-gray-50 pb-3">
+        <div class="p-2 bg-blue-50 text-blue-600 rounded-xl">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+        </div>
+        <div>
+            <h3 class="text-lg font-bold text-gray-800">تفاصيل حلقتي القرآنية</h3>
+            <p class="text-xs text-gray-400">المجموعة الحالية المسجل بها داخل المنظومة</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+        <div class="bg-gray-50 p-4 rounded-xl">
+            <span class="text-xs text-gray-400 font-semibold block">اسم الحلقة / المجموعة</span>
+            <span id="groupName" class="text-base font-bold text-gray-700 mt-1 block">جاري التحميل...</span>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-xl">
+            <span class="text-xs text-gray-400 font-semibold block">الشيخ / المعلم المحفظ</span>
+            <span id="groupTeacher" class="text-base font-bold text-blue-600 mt-1 block">جاري التحميل...</span>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-xl">
+            <span class="text-xs text-gray-400 font-semibold block">مواعيد التسميع والحلقة</span>
+            <span id="groupSchedule" class="text-xs font-bold text-gray-600 mt-1 block">جاري التحميل...</span>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mt-8">
+    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+        <div>
+            <h3 class="text-lg font-bold text-gray-800">سجل المدفوعات والاشتراكات المالية</h3>
+            <p class="text-xs text-gray-500 mt-1">متابعة الرسوم والوصولات المسددة للمكتب</p>
+        </div>
+        <div class="p-2 bg-green-50 text-green-600 rounded-xl">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+    </div>
+    
+    <div class="overflow-x-auto">
+        <table class="w-full text-right border-collapse">
+            <thead>
+                <tr class="bg-gray-100 text-gray-600 text-xs font-bold border-b border-gray-200">
+                    <th class="p-4">نوع الدفعة / البيان</th>
+                    <th class="p-4">المبلغ المسدد</th>
+                    <th class="p-4">تاريخ الوصل</th>
+                    <th class="p-4">الحالة</th>
+                </tr>
+            </thead>
+            <tbody id="paymentsTableBody" class="text-sm divide-y divide-gray-100">
+                <tr>
+                    <td colspan="4" class="p-4 text-center text-gray-400 text-xs">جاري تحميل السجل المالي...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
+    <div class="flex items-center justify-between border-b border-gray-50 pb-3 mb-6">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="p-2 bg-amber-50 text-amber-600 rounded-xl">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-gray-800">الأوراد والواجبات اليومية</h3>
+                <p class="text-xs text-gray-400">تابع مهام التسميع والمراجعة المطلوبة منك للحلقة القادمة</p>
+            </div>
+        </div>
+        <span class="text-xs bg-amber-50 text-amber-700 font-bold px-3 py-1 rounded-lg border border-amber-100">تحديث يومي حكيم</span>
+    </div>
+
+    <div id="assignmentsContainer" class="space-y-4">
+        <p class="text-center text-gray-400 text-xs py-4">جاري تحميل جدول الأوراد والواجبات...</p>
+    </div>
+</div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 text-center py-4 text-xs text-gray-500 mt-auto">
+        <p>جميع الحقوق محفوظة © جمعية المعالي للعلوم والتربية - مكتب ملاكو 2026</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // 1. جدار حماية الدخول (Route Guard) لقراءة التخزين المؤقت والدائم (تذكرني)
+            const userProfile = JSON.parse(localStorage.getItem('user_profile')) || JSON.parse(sessionStorage.getItem('user_profile'));
+            const token = localStorage.getItem('supabase_token') || sessionStorage.getItem('supabase_token');
+
+            // حظر الطرد الفوري لأي متسلل بدون توكن دخول
+            if (!userProfile || !token) {
+                alert("🔒 خطأ أمني: غير مصرح لك بالدخول! يرجى تسجيل الدخول أولاً لحماية بياناتك.");
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // 2. حقن بيانات الطالب الأساسية المتجاوزة للفحص الأمني
+            document.getElementById('welcomeName').innerText = `الطالب: ${userProfile.name}`;
+            document.getElementById('userAge').innerText = `${userProfile.age || '--'} سنة`;
+
+            // 3. جلب الإشعارات حياً من الخادم وتوثيق الهوية بـ Bearer Token
+            try {
+                const response = await fetch(`http://localhost:8080/api/notifications/${userProfile.user_id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.status === 401) {
+                    // إذا انتهت صلاحية الجلسة أو التوكن غير صالح، يتم طرده وتنظيف الذاكرة
+                    handleLogout();
+                    return;
+                }
+
+                const notifications = await response.json();
+                const notifBadge = document.getElementById('notifBadge');
+                const notifList = document.getElementById('notifList');
+
+                if (notifications.length > 0) {
+                    // إضاءة العداد الأحمر بالعدد الحقيقي للإشعارات
+                    notifBadge.innerText = notifications.length;
+                    notifBadge.classList.remove('hidden');
+
+                    // ضخ التنبيهات في القائمة
+                    notifList.innerHTML = notifications.map(n => `
+                        <div class="p-3 hover:bg-gray-50 transition duration-150 border-b border-gray-50">
+                            <p class="text-gray-700 leading-relaxed">${n.text}</p>
+                            <span class="text-[10px] text-gray-400 block mt-1">${new Date(n.date).toLocaleDateString('ar-EG')}</span>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error("خطأ أثناء الاتصال الآمن بالخادم لجلب التنبيهات المحدثة حياً.");
+            }
+        });
+
+        // إدارة القائمة المنسدلة للجرس (تفاعلية)
+        const notifBtn = document.getElementById('notifBtn');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        notifBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notifDropdown.classList.toggle('hidden');
+        });
+
+        document.getElementById('clearNotifBtn').addEventListener('click', () => {
+            document.getElementById('notifBadge').classList.add('hidden');
+            alert('تم قراءة جميع التنبيهات وإرجاع العداد للصفر.');
+        });
+
+        // إغلاق قائمة الإشعارات تلقائياً عند الضغط في أي مكان فارغ بالصفحة
+        document.addEventListener('click', () => {
+            notifDropdown.classList.add('hidden');
+        });
+
+        // دالة تنظيف الجلسة وتسجيل الخروج الآمن
+        function handleLogout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+   // دالة جلب تفاصيل المجموعة والحلقة القرآنية للطالب
+async function fetchStudentGroup(studentId) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/student/group/${studentId}`);
+        if (!response.ok) throw new Error();
+
+        const data = await response.json();
+        
+        // تحديث حقل المستوى الحالي حياً من قاعدة البيانات
+        if (data.current_level) {
+            document.getElementById('currentLevel').innerText = data.current_level;
+        }
+
+        // تحديث بيانات المجموعة إذا كان الطالب مضافاً لحلقة
+        if (data.groups) {
+            document.getElementById('groupName').innerText = data.groups.group_name;
+            document.getElementById('groupTeacher').innerText = data.groups.teacher_name;
+            document.getElementById('groupSchedule').innerText = data.groups.schedule;
+        } else {
+            // في حال لم يقم الإدمن بتسكينه في حلقة بعد
+            document.getElementById('groupName').innerText = "غير مسجل بحلقة حالياً";
+            document.getElementById('groupTeacher').innerText = "لم يحدد بعد";
+            document.getElementById('groupSchedule').innerText = "يرجى مراجعة إدارة المعالي لتسكينك";
+        }
+
+    } catch (error) {
+        console.error("خطأ أثناء جلب تفاصيل حلقة الطالب القرآنية");
+    }
+}
+// دالة جلب وعرض المدفوعات والاشتراكات المالية للطالب
+async function fetchStudentPayments(studentId) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/student/payments/${studentId}`);
+        if (!response.ok) throw new Error();
+
+        const payments = await response.json();
+        const tableBody = document.getElementById('paymentsTableBody');
+
+        if (payments.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="4" class="p-4 text-center text-gray-400 text-xs">لا يوجد أي مدفوعات أو وصولات مسجلة باسمك بعد.</td>
+                </tr>`;
+            return;
+        }
+
+        // ضخ الحركات المالية حياً داخل الجدول بصياغة Tailwind
+        tableBody.innerHTML = payments.map(p => {
+            // تخصيص لون شارة الحالة (مكتملة بالخضر، معلقة بالأصفر)
+            const statusClass = p.payment_status === 'مكتملة' 
+                ? 'bg-green-50 text-green-700 border-green-100' 
+                : 'bg-yellow-50 text-yellow-700 border-yellow-100';
+
+            return `
+                <tr class="hover:bg-gray-50 transition duration-150">
+                    <td class="p-4 font-semibold text-gray-700">${p.payment_type}</td>
+                    <td class="p-4 font-bold text-blue-600">${parseFloat(p.amount).toFixed(2)} د.ج</td>
+                    <td class="p-4 text-gray-500 text-xs">${new Date(p.payment_date).toLocaleDateString('ar-EG')}</td>
+                    <td class="p-4">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-bold border ${statusClass}">
+                            ${p.payment_status}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+    } catch (error) {
+        console.error("خطأ أثناء جلب السجل المالي للطالب");
+        document.getElementById('paymentsTableBody').innerHTML = `
+            <tr>
+                <td colspan="4" class="p-4 text-center text-red-500 text-xs font-semibold">فشل الاتصال بالخادم لجلب البيانات المالية.</td>
+            </tr>`;
+    }
+}
+// دالة جلب وعرض الأوراد والواجبات المقررة للطالب
+async function fetchStudentAssignments(studentId) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/student/assignments/${studentId}`);
+        if (!response.ok) throw new Error();
+
+        const assignments = await response.json();
+        const container = document.getElementById('assignmentsContainer');
+
+        if (assignments.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-6 text-gray-400 text-xs">
+                    🌟 لا توجد واجبات أو أوراد مقررة مسجلة لك حالياً. استمتع بحفظك المفتوح!
+                </div>`;
+            return;
+        }
+
+        // بناء وضخ المهام حياً
+        container.innerHTML = assignments.map(a => {
+            const statusBadge = a.is_completed 
+                ? '<span class="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-0.5 rounded-md border border-green-200">تم التسميع بنجاح</span>'
+                : '<span class="bg-rose-100 text-rose-800 text-[10px] font-bold px-2 py-0.5 rounded-md border border-rose-200">مطلوب للتسميع</span>';
+
+            // تنسيق تاريخ الاستحقاق
+            const formattedDueDate = new Date(a.due_date).toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'short' });
+
+            return `
+                <div class="border border-gray-100 rounded-xl p-4 hover:border-amber-200 transition duration-150 ${a.is_completed ? 'opacity-70 bg-gray-50/50' : 'bg-white shadow-sm'}">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="text-xs text-gray-500 font-medium">
+                            📅 المستهدف: <span class="text-gray-700 font-bold">${formattedDueDate}</span>
+                        </div>
+                        ${statusBadge}
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-emerald-50/60 rounded-xl border border-emerald-100/50">
+                            <span class="text-[11px] font-bold text-emerald-700 block mb-1">🟢 مقرر الحفظ الجديد:</span>
+                            <p class="text-sm font-semibold text-gray-800">${a.memorization_task}</p>
+                        </div>
+                        <div class="p-3 bg-blue-50/60 rounded-xl border border-blue-100/50">
+                            <span class="text-[11px] font-bold text-blue-700 block mb-1">🔵 مقرر المراجعة والتثبيت:</span>
+                            <p class="text-sm font-semibold text-gray-800">${a.review_task}</p>
+                        </div>
+                    </div>
+
+                    ${a.teacher_notes ? `
+                    <div class="mt-3 text-xs bg-gray-50 p-2.5 rounded-lg border-l-4 border-amber-400 text-gray-600 leading-relaxed">
+                        <span class="font-bold text-gray-700">💡 توجيه الشيخ:</span> ${a.teacher_notes}
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+
+    } catch (error) {
+        console.error("خطأ أثناء جلب جدول واجبات الطالب اليومية");
+        document.getElementById('assignmentsContainer').innerHTML = `
+            <p class="text-center text-red-500 text-xs font-semibold py-4">فشل الاتصال بالخادم لجلب جدول الأوراد المقررة.</p>`;
+    }
+}
+   
+   </script>
+</body>
+</html>
