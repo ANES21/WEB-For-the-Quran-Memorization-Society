@@ -200,8 +200,7 @@
 
         // 2. جلب وتحديث جدول المستخدمين
         async function loadUsers() {
-            try {
-                const res = await fetch('http://localhost:8080/api/admin/users', {
+            try {const res = await fetch('https://al-maali-association-for-science-and.onrender.com/api/admin/groups', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error();
