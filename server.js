@@ -1,27 +1,28 @@
-require('dotenv').config(); // 👈 1. تفعيل حزمة dotenv لقراءة الإعدادات الحساسة فوراً
+require('dotenv').config(); 
 const express = require('express');
 const { createClient } = require('@supabase/supabase-js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path'); // استدعاء حزمة التعامل مع المسارات
 
 const app = express();
-const port = process.env.PORT || 8080; // يمكن تعديل المنفذ ديناميكياً من ملف .env
+const port = process.env.PORT || 8080; 
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// 👈 2. الربط بـ Supabase باستخدام المسميات القياسية الكبيرة (UPPERCASE)
+// الربط بـ Supabase باستخدام متغيرات البيئة
 const supabaseUrl = process.env.SUPABASE_URL; 
 const supabaseKey = process.env.SUPABASE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-    console.error('❌ خطأ حرج: متغيرات البيئة SUPABASE_URL أو SUPABASE_KEY مفقودة في ملف .env');
+    console.error('❌ خطأ حرج: متغيرات البيئة SUPABASE_URL أو SUPABASE_KEY مفقودة');
     process.exit(1);
 }
 
 const supabase = createClient(supabaseUrl, supabaseKey);
-console.log('✓ تم إعداد حزمة Supabase من ملف البيئة الآمن بنجاح.');
+console.log('✓ تم إعداد حزمة Supabase بنجاح.');
 
 // ==========================================
 // و. جدار حماية للتحقق من التوكن وصلاحية الدخول (Auth Middleware)
@@ -60,7 +61,6 @@ app.post('/api/login', async (req, res) => {
     }
 
     try {
-        // 1. التحقق من الهوية عبر نظام حماية Supabase Auth
         const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
             email: email,
             password: password,
@@ -68,9 +68,8 @@ app.post('/api/login', async (req, res) => {
 
         if (authError) {
             return res.status(401).json({ error: 'فشل التحقق: ' + authError.message });
-        } // 👈 تم حذف الكلمة الزائدة التي كانت تسبب خطأً هنا
+        } 
 
-        // 2. جلب بيانات ملف التعريف الخاص بالمستخدم من جدول SQL (users)
         const { data: userProfile, error: profileError } = await supabase
             .from('users')
             .select('name, role, age')
@@ -454,7 +453,19 @@ app.put('/api/admin/assign-student-group', requireAuth, async (req, res) => {
     }
 });
 
-// تشغيل السيرفر والإنصات للطلبات
+// ==========================================
+// ع. معالجة وعرض الملفات الثابتة (Static Front-end)
+// ==========================================
+
+// توجيه السيرفر لقراءة ملفات الـ HTML والصور مباشرة من الجذر الرئيسي للمستودع
+app.use(express.static(path.join(__dirname, './'))); 
+
+// مسار افتراضي لعرض صفحة تسجيل الدخول فور فتح النطاق مباشرة
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+// تشغيل خادم المنظومة الموحد للاستماع إلى البيانات والطلبات
 app.listen(port, () => {
-    console.log(`🚀 خادم جمعية المعالي نشط ويعمل على الرابط: http://localhost:${port}`);
+    console.log(`🚀 المنظومة الموحدة مستقرة وتعمل على المنفذ: ${port}`);
 });
