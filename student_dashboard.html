@@ -183,7 +183,11 @@
 
             // 3. جلب الإشعارات حياً من الخادم وتوثيق الهوية بـ Bearer Token
             try {
+<<<<<<< HEAD
                 const response = await fetch(`http://localhost:8080/api/notifications/${userProfile.user_id}`, {
+=======
+                const response = await fetch(`${window.location.origin}/api/notifications/${userProfile.user_id}`, {
+>>>>>>> 9fdda12 (login reg)
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -247,7 +251,11 @@
    // دالة جلب تفاصيل المجموعة والحلقة القرآنية للطالب
 async function fetchStudentGroup(studentId) {
     try {
+<<<<<<< HEAD
         const response = await fetch(`http://localhost:8080/api/student/group/${studentId}`);
+=======
+        const response = await fetch(`${window.location.origin}/api/student/group/${studentId}`);
+>>>>>>> 9fdda12 (login reg)
         if (!response.ok) throw new Error();
 
         const data = await response.json();
@@ -276,7 +284,11 @@ async function fetchStudentGroup(studentId) {
 // دالة جلب وعرض المدفوعات والاشتراكات المالية للطالب
 async function fetchStudentPayments(studentId) {
     try {
+<<<<<<< HEAD
         const response = await fetch(`http://localhost:8080/api/student/payments/${studentId}`);
+=======
+        const response = await fetch(`${window.location.origin}/api/student/payments/${studentId}`);
+>>>>>>> 9fdda12 (login reg)
         if (!response.ok) throw new Error();
 
         const payments = await response.json();
@@ -322,7 +334,11 @@ async function fetchStudentPayments(studentId) {
 // دالة جلب وعرض الأوراد والواجبات المقررة للطالب
 async function fetchStudentAssignments(studentId) {
     try {
+<<<<<<< HEAD
         const response = await fetch(`http://localhost:8080/api/student/assignments/${studentId}`);
+=======
+        const response = await fetch(`${window.location.origin}/api/student/assignments/${studentId}`);
+>>>>>>> 9fdda12 (login reg)
         if (!response.ok) throw new Error();
 
         const assignments = await response.json();

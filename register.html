@@ -26,30 +26,49 @@
 
     <main class="flex-grow flex items-center justify-center container mx-auto px-4 py-8">
         <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md">
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> 9fdda12 (login reg)
             <div class="text-center mb-6">
                  <h2 class="text-2xl font-bold text-gray-800">إنشاء حساب جديد</h2>
                  <p class="text-xs text-gray-500 mt-1">الانضمام إلى المنصة الرقمية لمكتب ملاكو</p>
              </div>
 
             <form id="registerForm" class="space-y-4">
+<<<<<<< HEAD
                 
                 <div>
                     <label class="block text-sm font-semibold mb-1 text-gray-600">* الاسم الكامل</label>
                     <input type="text" id="name" required placeholder="الاسم الثلاثي" 
+=======
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1 text-gray-600">* الاسم الكامل</label>
+                    <input type="text" id="name" required placeholder="الاسم الثلاثي"
+>>>>>>> 9fdda12 (login reg)
                         class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition duration-150">
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold mb-1 text-gray-600">* البريد الإلكتروني</label>
+<<<<<<< HEAD
                     <input type="email" id="email" required placeholder="name@example.com" 
+=======
+                    <input type="email" id="email" required placeholder="name@example.com"
+>>>>>>> 9fdda12 (login reg)
                         class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition duration-150">
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-sm font-semibold mb-1 text-gray-600">* العمر</label>
+<<<<<<< HEAD
                         <input type="number" id="age" required min="5" max="90" placeholder="18" 
+=======
+                        <input type="number" id="age" required min="5" max="90" placeholder="18"
+>>>>>>> 9fdda12 (login reg)
                             class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition duration-150">
                     </div>
 
@@ -65,7 +84,11 @@
 
                 <div>
                     <label class="block text-sm font-semibold mb-1 text-gray-600">* كلمة المرور</label>
+<<<<<<< HEAD
                     <input type="password" id="password" required minlength="6" placeholder="••••••••" 
+=======
+                    <input type="password" id="password" required minlength="6" placeholder="••••••••"
+>>>>>>> 9fdda12 (login reg)
                         class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition duration-150">
                 </div>
 
@@ -78,17 +101,26 @@
             </form>
 
             <div class="text-center mt-6 pt-4 border-t border-gray-100 text-sm text-gray-600">
+<<<<<<< HEAD
                 لديك حساب بالفعل؟ 
+=======
+                لديك حساب بالفعل؟
+>>>>>>> 9fdda12 (login reg)
                 <a href="login.html" class="text-blue-600 font-bold hover:underline">سجل الدخول هنا</a>
             </div>
 
         </div>
     </main>
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 9fdda12 (login reg)
     <footer class="bg-white border-t border-gray-200 text-center py-4 text-xs text-gray-500">
         <p>جميع الحقوق محفوظة © جمعية المعالي للعلوم والتربية - مكتب ملاكو 2026</p>
     </footer>
 
+<<<<<<< HEAD
     <script>
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -142,5 +174,58 @@
         });
     </script>
 
+=======
+   <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const age = parseInt(document.getElementById('age').value);
+        const role = document.getElementById('role').value;
+        const password = document.getElementById('password').value;
+
+        const statusDiv = document.getElementById('statusMessage');
+        const submitBtn = document.getElementById('submitBtn');
+
+        statusDiv.classList.add('hidden');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "جاري إنشاء الحساب...";
+
+        try {
+            // حل المشكلة: توجيه قطعي مباشر لمنفذ سيرفر الـ Node.js لكسر حصار منفذ الـ Live Server
+            const backendUrl = 'http://127.0.0.1:8080';
+
+            const response = await fetch(`${backendUrl}/api/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, age, role, password })
+            });
+
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                throw new Error(data.error || `خطأ من السيرفر: ${response.status}`);
+            }
+
+            statusDiv.className = "text-sm p-3 rounded-xl border bg-green-50 text-green-600 border-green-100";
+            statusDiv.innerText = data.message || "تم إنشاء الحساب بنجاح! سيتم توجيهك لصفحة تسجيل الدخول...";
+            statusDiv.classList.remove('hidden');
+
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+
+        } catch (error) {
+            statusDiv.className = "text-sm p-3 rounded-xl border bg-red-50 text-red-600 border-red-100";
+            // هنا سيطبع لك المتصفح الخطأ الأمني الصريح بدلاً من الكلمة العامة
+            statusDiv.innerText = error.message; 
+            statusDiv.classList.remove('hidden');
+            submitBtn.disabled = false;
+            submitBtn.innerText = "تسجيل الحساب وحفظ البيانات";
+        }
+    });
+</script>
+>>>>>>> 9fdda12 (login reg)
 </body>
 </html>

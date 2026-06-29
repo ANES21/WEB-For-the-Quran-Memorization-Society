@@ -181,7 +181,11 @@
         // جلب قائمة الطلاب الكلية من الخادم
         async function fetchStudents() {
             try {
+<<<<<<< HEAD
                 const res = await fetch('http://localhost:8080/api/admin/users', {
+=======
+                const res = await fetch(`${window.location.origin}/api/admin/users`, {
+>>>>>>> 9fdda12 (login reg)
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error();
@@ -239,7 +243,11 @@
         // جلب أرشيف الترقيات العامة
         async function fetchProgressHistory() {
             try {
+<<<<<<< HEAD
                 const res = await fetch('http://localhost:8080/api/admin/progress', {
+=======
+                const res = await fetch(`${window.location.origin}/api/admin/progress`, {
+>>>>>>> 9fdda12 (login reg)
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error();
@@ -275,7 +283,11 @@
             msg.classList.add('hidden');
 
             try {
+<<<<<<< HEAD
                 const res = await fetch('http://localhost:8080/api/teacher/promote', {
+=======
+                const res = await fetch(`${window.location.origin}/api/teacher/promote`, {
+>>>>>>> 9fdda12 (login reg)
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',

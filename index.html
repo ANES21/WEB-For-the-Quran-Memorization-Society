@@ -375,7 +375,11 @@ let allUsers = [];
 
 async function fetchUsers() {
     try {
+<<<<<<< HEAD
         const res = await fetch('http://localhost:8080/api/admin/users', {
+=======
+        const res = await fetch(`${window.location.origin}/api/admin/users`, {
+>>>>>>> 9fdda12 (login reg)
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!res.ok) throw new Error();
@@ -440,7 +444,11 @@ async function deleteUser(userId) {
     }
 
     try {
+<<<<<<< HEAD
         const res = await fetch(`http://localhost:8080/api/admin/users/${userId}`, {
+=======
+        const res = await fetch(`${window.location.origin}/api/admin/users/${userId}`, {
+>>>>>>> 9fdda12 (login reg)
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -466,7 +474,11 @@ async function deleteUser(userId) {
 // ══════════════════════════════════════════
 async function fetchGroups() {
     try {
+<<<<<<< HEAD
         const res = await fetch('http://localhost:8080/api/admin/groups', {
+=======
+        const res = await fetch(`${window.location.origin}/api/admin/groups`, {
+>>>>>>> 9fdda12 (login reg)
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!res.ok) throw new Error();
@@ -501,7 +513,11 @@ document.getElementById('groupForm').addEventListener('submit', async (e) => {
     msg.classList.add('hidden');
 
     try {
+<<<<<<< HEAD
         const res = await fetch('http://localhost:8080/api/admin/groups', {
+=======
+        const res = await fetch(`${window.location.origin}/api/admin/groups`, {
+>>>>>>> 9fdda12 (login reg)
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
@@ -532,7 +548,11 @@ document.getElementById('groupForm').addEventListener('submit', async (e) => {
 // ══════════════════════════════════════════
 async function fetchAllProgress() {
     try {
+<<<<<<< HEAD
         const res = await fetch('http://localhost:8080/api/admin/progress', {
+=======
+        const res = await fetch(`${window.location.origin}/api/admin/progress`, {
+>>>>>>> 9fdda12 (login reg)
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!res.ok) throw new Error();
@@ -563,7 +583,11 @@ document.getElementById('promoteForm').addEventListener('submit', async (e) => {
     msg.classList.add('hidden');
 
     try {
+<<<<<<< HEAD
         const res = await fetch('http://localhost:8080/api/teacher/promote', {
+=======
+        const res = await fetch(`${window.location.origin}/api/teacher/promote`, {
+>>>>>>> 9fdda12 (login reg)
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
@@ -592,7 +616,11 @@ document.getElementById('promoteForm').addEventListener('submit', async (e) => {
 // ══════════════════════════════════════════
 async function fetchGlobalFinance() {
     try {
+<<<<<<< HEAD
         const res = await fetch('http://localhost:8080/api/admin/payments', {
+=======
+        const res = await fetch(`${window.location.origin}/api/admin/payments`, {
+>>>>>>> 9fdda12 (login reg)
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!res.ok) throw new Error();
@@ -637,7 +665,11 @@ document.getElementById('transactionForm').addEventListener('submit', async (e) 
     msg.classList.add('hidden');
 
     try {
+<<<<<<< HEAD
         const res = await fetch('http://localhost:8080/api/admin/payments', {
+=======
+        const res = await fetch(`${window.location.origin}/api/admin/payments`, {
+>>>>>>> 9fdda12 (login reg)
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({
@@ -672,7 +704,11 @@ async function deleteUser(userId) {
 
     try {
         // 2. إرسال طلب الحذف (DELETE) إلى السيرفر المحلي مع تمرير الـ الـ ID والـ Token لحماية المسار
+<<<<<<< HEAD
         const res = await fetch(`http://localhost:8080/api/admin/users/${userId}`, {
+=======
+        const res = await fetch(`${window.location.origin}/api/admin/users/${userId}`, {
+>>>>>>> 9fdda12 (login reg)
             method: 'DELETE',
             headers: { 
                 'Authorization': `Bearer ${token}` // توكن المصادقة الخاص بالمسؤول

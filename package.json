@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "web-for-the-quran-memorization-society",
   "version": "1.0.0",
   "description": "Quran Memorization Society System",
@@ -15,5 +16,16 @@
   },
   "engines": {
     "node": "22.x"
+=======
+  "dependencies": {
+    "@supabase/supabase-js": "^2.108.2",
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.3.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "firebase": "^12.15.0",
+    "undici": "^7.28.0"
+>>>>>>> 9fdda12 (login reg)
   }
 }

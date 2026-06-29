@@ -171,7 +171,11 @@
         // 1. استدعاء الحلقات بنجاح وحل خطأ الـ Fetch
         async function loadGroups() {
             try {
+<<<<<<< HEAD
                 const res = await fetch('http://localhost:8080/api/admin/groups', {
+=======
+                const res = await fetch(`${window.location.origin}/api/admin/groups`, {
+>>>>>>> 9fdda12 (login reg)
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error();
@@ -200,7 +204,12 @@
 
         // 2. جلب وتحديث جدول المستخدمين
         async function loadUsers() {
+<<<<<<< HEAD
             try {const res = await fetch('https://al-maali-association-for-science-and.onrender.com/api/admin/groups', {
+=======
+            try {
+                const res = await fetch(`${window.location.origin}/api/admin/users`, {
+>>>>>>> 9fdda12 (login reg)
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error();
@@ -238,7 +247,11 @@
         document.getElementById('createGroupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             try {
+<<<<<<< HEAD
                 const res = await fetch('http://localhost:8080/api/admin/groups', {
+=======
+                const res = await fetch(`${window.location.origin}/api/admin/groups`, {
+>>>>>>> 9fdda12 (login reg)
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
@@ -263,7 +276,11 @@
         document.getElementById('paymentForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             try {
+<<<<<<< HEAD
                 const res = await fetch('http://localhost:8080/api/admin/payments', {
+=======
+                const res = await fetch(`${window.location.origin}/api/admin/payments`, {
+>>>>>>> 9fdda12 (login reg)
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
@@ -284,4 +301,8 @@
         });
     </script>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 9fdda12 (login reg)

@@ -78,7 +78,7 @@
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault(); 
             
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const errorDiv = document.getElementById('errorMessage');
             const submitBtn = document.getElementById('submitBtn');
@@ -88,7 +88,10 @@
             submitBtn.innerText = "جاري التحقق...";
 
             try {
-                const response = await fetch('/api/login', {
+                // تعديل قطعي مباشر لكسر حصار منفذ الـ Live Server المتسبب في الخطأ
+                const backendUrl = 'http://127.0.0.1:8080';
+
+                const response = await fetch(`${backendUrl}/api/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -96,31 +99,34 @@
                     body: JSON.stringify({ email, password })
                 });
 
-                const data = await response.json();
+                // تأمين جلب النصوص لتفادي الـ Unexpected end of JSON input إذا كان السيرفر معطلاً
+                const textData = await response.text();
+                const data = textData ? JSON.parse(textData) : {};
 
                 if (!response.ok) {
-                    throw new Error(data.error || 'حدث خطأ أثناء تسجيل الدخول');
+                    throw new Error(data.error || `خطأ من السيرفر بترميز: ${response.status}`);
                 }
 
-                // حفظ التوكن وبيانات المستخدم بشكل صحيح
+                // حفظ التوكن وبيانات المستخدم بشكل صحيح في المتصفح
                 localStorage.setItem('supabase_token', data.token);
                 localStorage.setItem('user_profile', JSON.stringify(data.user));
 
                 alert(data.message);
 
-                // تحويل الدور لنصوص صغيرة لتجنب أخطاء أحرف الكابيتل
+                // تحويل الدور لنصوص صغيرة لتجنب أخطاء حالة الأحرف
                 const role = (data.user.role || '').toLowerCase();
                 
-            // بعد استقبال استجابة الدخول الناجحة من السيرفر:
-const userRole = data.user.role; // جلب دور المستخدم (Admin, Cashier, etc.)
-
-if (userRole === 'Admin') {
-    window.location.href = '/admin_dashboard.html'; // أو اسم ملف الأدمن عندك
-} else if (userRole === 'Cashier') {
-    window.location.href = '/cashier_dashboard.html'; // أو اسم ملف الصندوق
-} else {
-    window.location.href = '/student_dashboard.html';
-}
+                if (role === 'admin') {
+                    window.location.href = 'admin_dashboard.html';
+                } else if (role === 'student') {
+                    window.location.href = 'student_dashboard.html';
+                } else if (role === 'teacher') {
+                    window.location.href = 'teacher_dashboard.html';
+                } else if (role === 'cashier') {
+                    window.location.href = 'cashier_dashboard.html';
+                } else {
+                    throw new Error('نوع الحساب غير معروف أو غير مصرح له بالدخول');
+                }
 
             } catch (error) {
                 errorDiv.innerText = error.message;
